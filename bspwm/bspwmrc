@@ -1,0 +1,45 @@
+#! /bin/sh
+sxhkd &
+# If HDMI-1 connected, split workspaces to both monitors
+if [ "$(xrandr | grep "HDMI-1 connected")" ]
+then
+    bspc monitor HDMI-1 -d 1 2 3 4 5
+    bspc monitor eDP-1 -d 6 7 8 9 10
+
+else
+    bspc monitor eDP-1 -d 1 2 3 4 5 6 7 8 9 10
+fi
+bspc config focus_follows_pointer true 
+# Used to make polybar maintain proper workspaces per monitor when going from 2
+# to 1 monitor again.. This may include some monitor re-ordering issues
+bspc config remove_unplugged_monitors true
+bspc config remove_disabled_monitors true
+
+
+# Sometimes when using an external monitor that is larger than the base laptop
+# screen size, padding would be applied to make the nodes the size of the
+# laptop resolution - we don't want that, as the nodes should fill out the
+# entire height/width of the monitor, so we set all padding to 0.
+bspc config top_padding 16
+bspc config right_padding 0
+bspc config bottom_padding 0
+bspc config left_padding 0
+
+
+bspc config border_width         2
+bspc config window_gap           4
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+# --------------------------------
+# ------- Non-BSPWM related ------
+# --------------------------------
+# Reload .Xresources
+xrdb -load ~/.Xresources
+# Launch polybar
+~/.config/polybar/launch.sh
+
+export _JAVA_AWT_WM_NONREPARENTING=1
+

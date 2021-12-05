@@ -1,0 +1,9 @@
+configuration {
+ modi: "window,drun,combi";
+ font: "Iosevka 14";
+ combi-modi: "window,drun,ssh";
+ icon-theme: "Tela";
+ show-icons: true;
+ hover-select: true;
+ }
+@theme "/usr/share/rofi/themes/gruvbox-dark-hard.rasi"
